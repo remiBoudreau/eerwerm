@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:eerwerm/widgets/grid.dart';
 import 'package:eerwerm/widgets/custom_navigation_bar.dart';
+import 'package:eerwerm/widgets/navBarData.dart';
 
 // Filter by 1. genre, 2. neighbourhood, 3. price range, 4.food type
 
@@ -24,8 +25,7 @@ class _GridScreenState extends State<GridScreen> {
         title: Center(child: Text(widget.title)),
       ),
       body: Grid(),
-      bottomNavigationBar:
-          widget.infoView ? InfoNavigationBar() : GridNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(navList: gridNavList),
     );
   }
 }
