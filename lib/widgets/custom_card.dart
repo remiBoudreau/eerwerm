@@ -2,30 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:eerwerm/screens/infoScreen.dart';
 
+import 'package:eerwerm/providers/grid_nav_in.dart';
+import 'package:provider/provider.dart';
+
 class CustomCard extends StatelessWidget {
   const CustomCard({super.key, required this.venue});
   final Map<String, dynamic> venue;
 
   @override
   Widget build(BuildContext context) {
+    final gridNavIn = Provider.of<GridNavInProvider>(context).gridNavIn;
+
     return Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Stack(children: <Widget>[
-          Expanded(
-              child: Ink.image(
-                  image: NetworkImage('https://via.placeholder.com/400x200'),
-                  fit: BoxFit.cover,
-                  child: InkWell(
-                      splashColor: Colors.purple.withAlpha(15),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            child: InfoScreen(venue: venue),
-                          ),
-                        );
-                      }))),
+          Ink.image(
+              image: NetworkImage('https://via.placeholder.com/400x200'),
+              fit: BoxFit.cover,
+              child: InkWell(
+                  splashColor: Colors.purple.withAlpha(15),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        child: InfoScreen(venue: venue),
+                      ),
+                    );
+                  })),
           IgnorePointer(
               ignoring: true,
               child: Padding(
@@ -34,11 +38,15 @@ class CustomCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        venue['venue_name'], // Your card title
+                        gridNavIn == 0
+                            ? venue['genre']
+                            : gridNavIn == 1
+                                ? venue['neighbourhood']
+                                : venue['cuisine'], // Your card title
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
-                        venue['band_name'], // Your card subtitle
+                        venue['artist_name'], // Your card subtitle
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ]),

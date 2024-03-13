@@ -1,50 +1,67 @@
 import 'package:flutter/material.dart';
 
-// Bottom Nav Bar
+// App Bar
+import 'package:eerwerm/widgets/custom_app_bar.dart';
+
+// Nav Bar
 import 'package:eerwerm/widgets/custom_navigation_bar.dart';
 import 'package:eerwerm/widgets/navBarData.dart';
 
 // Widgets
 import 'package:eerwerm/widgets/grid.dart';
-import 'package:eerwerm/widgets/info_overlay.dart';
+import 'package:eerwerm/widgets/info.dart';
+import 'package:eerwerm/widgets/custom_date_picker.dart';
 
-// Filter by 1. genre, 2. neighbourhood, 3. price range, 4.food type
+// Providers
 
 class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key, required this.venue});
+  const InfoScreen({super.key, this.venue = const {'longDescription': ''}});
   final Map<String, dynamic> venue;
-  final filterKey = '';
 
   @override
   State<InfoScreen> createState() => _InfoScreenState();
 }
 
 class _InfoScreenState extends State<InfoScreen> {
+  int infoNavIn = 0;
+
+  void setInfoNavIn(int navIndex) {
+    setState(() {
+      infoNavIn = navIndex;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Center(
-            child: Text(
-                '${widget.venue['band_name']} at ${widget.venue['band_name']}')),
-      ),
       body: Stack(
         children: [
-          Grid(),
-          InfoOverlay(),
+          Scaffold(
+              appBar: CustomAppBar(),
+              body: ListView(children: [
+                CustomDatePicker(),
+                Divider(),
+                Grid(),
+              ])),
+          Positioned.fill(
+              child: Container(
+            color: Colors.black.withAlpha(100),
+          )),
+          Padding(
+              padding: EdgeInsets.only(
+                  top: 48.0, bottom: 24.0, right: 24.0, left: 24.0),
+              child: Info(venue: widget.venue, infoNavIn: infoNavIn)),
         ],
       ),
-      bottomNavigationBar: CustomNavigationBar(navList: infoNavList),
+      bottomNavigationBar: CustomNavigationBar(
+        navList: infoNavList,
+        setNavIn: setInfoNavIn,
+      ),
     );
   }
 }
 
 /* TODO: 
-        - InfoOverlay sizing, 
         - InfoOverlay content,
         - Transition onTap from GridScreen to InfoScreen
-        - Darkened Background on InfoOverlay
-        - Determine if push can be used for overlay instead of completely new Scaffold
-        - 
 */

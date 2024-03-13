@@ -1,31 +1,48 @@
+// Material
 import 'package:flutter/material.dart';
-import 'package:eerwerm/widgets/grid.dart';
+
+// App Bar
+import 'package:eerwerm/widgets/custom_app_bar.dart';
+
+// Nav Bar
 import 'package:eerwerm/widgets/custom_navigation_bar.dart';
 import 'package:eerwerm/widgets/navBarData.dart';
 
-// Filter by 1. genre, 2. neighbourhood, 3. price range, 4.food type
+// Widgets
+import 'package:eerwerm/widgets/custom_date_picker.dart';
+import 'package:eerwerm/widgets/grid.dart';
+
+// Providers
+import 'package:eerwerm/providers/grid_nav_in.dart';
+import 'package:provider/provider.dart';
 
 class GridScreen extends StatefulWidget {
-  const GridScreen({super.key, required this.title});
-  final String title;
-  final bool infoView = false;
-  final filterKey = 'cuisine';
+  const GridScreen({super.key});
 
   @override
   State<GridScreen> createState() => _GridScreenState();
-  // Add change based on Bottom App Bar
 }
 
 class _GridScreenState extends State<GridScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Center(child: Text(widget.title)),
+      appBar: CustomAppBar(),
+      body: ListView(
+        children: [
+          Divider(),
+          CustomDatePicker(),
+          Divider(),
+          Grid(),
+        ],
       ),
-      body: Grid(),
-      bottomNavigationBar: CustomNavigationBar(navList: gridNavList),
+      bottomNavigationBar: CustomNavigationBar(
+        navList: gridNavList,
+        setNavIn: (int navIndex) {
+          Provider.of<GridNavInProvider>(context, listen: false)
+              .setGridNavIn(navIndex);
+        },
+      ),
     );
   }
 }

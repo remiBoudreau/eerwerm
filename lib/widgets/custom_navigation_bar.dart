@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomNavigationBar extends StatelessWidget {
-  const CustomNavigationBar({super.key, required this.navList});
+  const CustomNavigationBar(
+      {super.key, required this.navList, required this.setNavIn});
   final List<Map<String, dynamic>> navList;
+  final Function setNavIn;
 
   @override
   Widget build(BuildContext context) {
