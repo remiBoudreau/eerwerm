@@ -34,23 +34,24 @@ class Info extends StatelessWidget {
           ),
         ),
         Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          margin: EdgeInsets.zero,
-          child: Container(
-            height: 200, // Adjust the height of the image
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                  'https://via.placeholder.com/400x200', // Placeholder image URL
-                ),
-                fit: BoxFit.cover,
-              ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
             ),
-          ),
-        ),
+            margin: EdgeInsets.zero,
+            child: Hero(
+                tag: venue['_id'],
+                child: Container(
+                  height: 200, // Adjust the height of the image
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        'https://via.placeholder.com/400x200', // Placeholder image URL
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ))),
       ],
     );
   }

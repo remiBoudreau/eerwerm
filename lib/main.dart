@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:eerwerm/providers/date.dart';
 import 'package:eerwerm/providers/filters.dart';
 import 'package:eerwerm/providers/grid_nav_in.dart';
+import 'package:eerwerm/providers/grid_scaffold_key.dart';
 
 void main() {
   runApp(const Eerwerm());
@@ -23,6 +24,8 @@ class Eerwerm extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => DateProvider()),
           ChangeNotifierProvider(create: (context) => FiltersProvider()),
           ChangeNotifierProvider(create: (context) => GridNavInProvider()),
+          ChangeNotifierProvider(
+              create: (context) => GridScaffoldKeyProvider()),
         ],
         child: MaterialApp(
           theme: ThemeData(

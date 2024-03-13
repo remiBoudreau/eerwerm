@@ -16,20 +16,26 @@ class CustomCard extends StatelessWidget {
     return Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Stack(children: <Widget>[
-          Ink.image(
-              image: NetworkImage('https://via.placeholder.com/400x200'),
-              fit: BoxFit.cover,
-              child: InkWell(
-                  splashColor: Colors.purple.withAlpha(15),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: InfoScreen(venue: venue),
-                      ),
-                    );
-                  })),
+          Hero(
+            tag: venue['_id'],
+            child: Ink.image(
+                image: NetworkImage('https://via.placeholder.com/400x200'),
+                fit: BoxFit.cover,
+                child: InkWell(
+                    splashColor: Colors.purple.withAlpha(15),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          opaque: false, // set to false
+                          pageBuilder: (_, __, ___) => InfoScreen(venue: venue),
+                        ),
+                        // PageTransition(
+                        //   type: PageTransitionType.fade,
+                        //   child: InfoScreen(venue: venue),
+                        // ),
+                      );
+                    })),
+          ),
           IgnorePointer(
               ignoring: true,
               child: Padding(
